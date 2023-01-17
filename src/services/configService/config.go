@@ -1,6 +1,7 @@
 package config
 
 import(	
+	"strings"
 	"time"
 	"github.com/go-acme/lego/v4/registration"
 	"crypto"
@@ -27,6 +28,12 @@ type Config struct {
 	PollingIntervall time.Duration
 }
 
+type CertificateDefinition struct {
+	id string
+	domain string
+	dnsProvider string
+}
+
 func New(pref fyne.Preferences) Config {
 	return Config { preferences: pref }
 }
@@ -49,18 +56,42 @@ func (u *Config) GetPrivateKey() crypto.PrivateKey {
 
 // E-Mail Adress needed to regstier with LetsEncrypt
 func (u *Config) GetEmail() string {
-	return u.preferences.StringWithFallback("email", "")
+	return u.preferences.StringWithFallback("user.email", "")
 }
 
 // E-Mail Adress needed to regstier with LetsEncrypt
 func (u *Config) SetEmail(email string) {
-	u.preferences.SetString("email", email)
+	u.preferences.SetString("user.email", email)
 }
 
 func (u *Config) GetTOSAgree() bool {
-	return u.preferences.BoolWithFallback("TOSAgree", false)
+	return u.preferences.BoolWithFallback("user.TOSAgree", false)
 }
 
 func (u *Config) SetTOSAgree(tosAgree bool) {
 	u.preferences.SetBool("TOSAgree", tosAgree)
+}
+
+func (u *Config) GetCertificateDefinitions() []CertificateDefinition {
+	certificateDefintions:= []CertificateDefinition{}
+	serialisedDefinitions := u.preferences.StringWithFallback("user.certificateDefinitions", "")
+	definitions := strings.Split(serialisedDefinitions, ",")
+	for _, sd := range definitions {
+		elements := strings.Split(sd, ":")
+		certificateDefintions = append(certificateDefintions, CertificateDefinition {
+			id: elements[0],
+			domain: elements[1],
+			dnsProvider: elements[2],
+		})
+    }
+	return certificateDefintions
+}
+
+func (u *Config) SetCertificateDefinitions(definitions []CertificateDefinition) {
+	serialisedDefinitions := []string{}
+	for _, d := range definitions  {
+		serialisedDefinitions = append(serialisedDefinitions, d.id + ":" + d.domain + ":" + d.dnsProvider)
+	}
+
+	u.preferences.SetString("user.certificateDefinitions", strings.Join(serialisedDefinitions, ","))
 }

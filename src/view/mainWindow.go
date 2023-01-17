@@ -26,9 +26,10 @@ func (mw MainWindow) Show(a fyne.App) {
 	dns2Form := CertificateForm(mw.services)
 
 	userConfigView := container.NewTabItem("Settings", UserConfigView(mw.services))
+	addItem := container.NewTabItem("NEW", CertificateForm(mw.services))
 	tabItem1 := container.NewTabItem("DNS1", dns1Form)
 	tabItem2 := container.NewTabItem("DNS2", dns2Form)
-	tabs := container.NewAppTabs(userConfigView, tabItem1, tabItem2)
+	tabs := container.NewAppTabs(addItem, userConfigView, tabItem1, tabItem2)
 
 	win.SetContent(tabs)
 	win.ShowAndRun()

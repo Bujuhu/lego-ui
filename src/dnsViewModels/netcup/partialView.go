@@ -34,18 +34,30 @@ func PartialView(services services.SingletonServices) *fyne.Container {
 
 	inputCustomerNumber := widget.NewEntry()
 	inputCustomerNumber.SetPlaceHolder("Enter text...")
+	inputCustomerNumber.Text = services.Preferences.StringWithFallback("netcup.customerNumber", "")
+	inputCustomerNumber.OnChanged = func(value string) {
+		services.Preferences.SetString("netcup.customerNumber", value)
+	}
 
 	apiKey := canvas.NewText("API Key", color.White)
 	apiKey.Alignment = fyne.TextAlignLeading
 
 	inputAPIKey := widget.NewEntry()
 	inputAPIKey.SetPlaceHolder("Enter text...")
+	inputAPIKey.Text = services.Preferences.StringWithFallback("netcup.apiKey", "")
+	inputAPIKey.OnChanged = func(value string) {
+		services.Preferences.SetString("netcup.apiKey", value)
+	}
 
 	apiPass := canvas.NewText("Api Password", color.White)
 	apiPass.Alignment = fyne.TextAlignLeading
 
 	inputAPIPass := widget.NewPasswordEntry()
 	inputAPIPass.SetPlaceHolder("Enter text...")
+	inputAPIPass.Text = services.Preferences.StringWithFallback("netcup.apiPass", "")
+	inputAPIPass.OnChanged = func(value string) {
+		services.Preferences.SetString("netcup.apiPass", value)
+	}
 
 		// Set provider configuration and invoke certificate generation, if Button is pressed
 		getCertButton := widget.NewButton("GetCert", func() {

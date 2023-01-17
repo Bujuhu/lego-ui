@@ -13,6 +13,7 @@ func TestCertificateForm(t *testing.T) {
 	w := a.NewWindow("LEGO-Test")
 	var services = services.SingletonServices {
 		UserConfig: config.New(a.Preferences()),
+		Preferences: a.Preferences(),
 		UserLog: userLogService.New(),
 	}
 	w.SetContent(CertificateForm(services))

@@ -22,6 +22,7 @@ func main() {
 	var services = services.SingletonServices {
 		UserConfig: config.New(a.Preferences()),
 		UserLog: userLogService.New(),
+		Preferences: a.Preferences(),
 	}
 	view.New(services, data).Show(a)
 }

@@ -15,6 +15,7 @@ func TestUserConfigView(t *testing.T) {
 	var services = services.SingletonServices {
 		UserConfig: config.New(a.Preferences()),
 		UserLog: userLogService.New(),
+		Preferences: a.Preferences(),
 	}
 	w.SetContent(UserConfigView(services))
 }

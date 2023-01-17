@@ -1,6 +1,7 @@
 package services
 
 import(
+	"fyne.io/fyne/v2"
 	"github.com/bujuhu/lego-ui/services/userLogService"
 	"github.com/bujuhu/lego-ui/services/configService"
 )
@@ -9,4 +10,5 @@ import(
 type SingletonServices struct {
 	UserLog userLogService.UserLogService
 	UserConfig config.Config
+	Preferences fyne.Preferences
 }
