@@ -69,7 +69,7 @@ func (u *Config) GetTOSAgree() bool {
 }
 
 func (u *Config) SetTOSAgree(tosAgree bool) {
-	u.preferences.SetBool("TOSAgree", tosAgree)
+	u.preferences.SetBool("user.TOSAgree", tosAgree)
 }
 
 func (u *Config) GetCertificateDefinitions() []CertificateDefinition {

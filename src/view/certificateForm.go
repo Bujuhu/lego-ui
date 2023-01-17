@@ -8,10 +8,10 @@ import (
 	"github.com/bujuhu/lego-ui/services"
 )
 
-func CertificateForm(services services.SingletonServices) *fyne.Container {
+func CertificateForm(services services.SingletonServices, tabItem *container.TabItem) *fyne.Container {
 	
 	overhead := container.New(layout.NewVBoxLayout(), Title("Get Your TLS Certificates"))
-	inputForm := netcup.PartialView(services)
+	inputForm := netcup.PartialView(services,tabItem)
 
-	return container.New(layout.NewHBoxLayout(), LogBox(services), container.New(layout.NewVBoxLayout(), overhead, inputForm))
+	return container.New(layout.NewGridLayout(2), container.New(layout.NewVBoxLayout(), overhead, inputForm), LogBox(services))
 }

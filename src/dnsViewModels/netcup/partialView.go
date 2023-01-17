@@ -3,7 +3,6 @@ package netcup
 import (
 	"net/http"
 	"time"
-
 	"github.com/go-acme/lego/v4/challenge/dns01"
 
 
@@ -21,13 +20,16 @@ import (
 )
 
 // Creates a View which provides form fields to satisfy all requirements for Netcup DNS
-func PartialView(services services.SingletonServices) *fyne.Container {
+func PartialView(services services.SingletonServices, tabItem *container.TabItem) *fyne.Container {
 
 	domainName := canvas.NewText("Domain Name", color.White)
 	domainName.Alignment = fyne.TextAlignLeading
 
 	inputDomainName := widget.NewEntry()
 	inputDomainName.SetPlaceHolder("Enter text...")
+	inputDomainName.OnChanged = func(value string) {
+		tabItem.Text = value
+	}
 
 	customerNumber := canvas.NewText("Customer Number", color.White)
 	customerNumber.Alignment = fyne.TextAlignLeading

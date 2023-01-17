@@ -4,6 +4,8 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"github.com/bujuhu/lego-ui/services"
+	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/widget"
 )
 
 //Graphical User Interface configuration and initalisation
@@ -22,15 +24,16 @@ func (mw MainWindow) Show(a fyne.App) {
 
 	//Invoke partial View here to get DNS provider specific form
 
-	dns1Form := CertificateForm(mw.services)
-	dns2Form := CertificateForm(mw.services)
-
 	userConfigView := container.NewTabItem("Settings", UserConfigView(mw.services))
-	addItem := container.NewTabItem("NEW", CertificateForm(mw.services))
-	tabItem1 := container.NewTabItem("DNS1", dns1Form)
-	tabItem2 := container.NewTabItem("DNS2", dns2Form)
-	tabs := container.NewAppTabs(addItem, userConfigView, tabItem1, tabItem2)
+	tabs := container.NewAppTabs(userConfigView)
 
-	win.SetContent(tabs)
+	newCertificateButton := widget.NewButton("Create New Certificate", func() {
+		createItem := container.NewTabItem("New Certificate", container.New(layout.NewMaxLayout()))
+		createItem.Content = CertificateForm(mw.services, createItem)
+		tabs.Append(createItem)
+		tabs.Select(createItem)
+	})
+
+	win.SetContent(container.New(layout.NewVBoxLayout(), tabs, newCertificateButton))
 	win.ShowAndRun()
 }

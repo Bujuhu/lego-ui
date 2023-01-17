@@ -9,6 +9,7 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 	"github.com/bujuhu/lego-ui/services"
 )
@@ -39,9 +40,7 @@ func LogBox(services services.SingletonServices) *fyne.Container {
 				return
 			}
     }()
-	logOutBox.Resize(fyne.Size{400, 1000})
-	logOutBox.Move(fyne.Position{400, 0})
-	
-	logOutput := container.NewWithoutLayout(logOutBox)
+
+	logOutput := container.New(layout.NewMaxLayout(), logOutBox)
 	return logOutput
 }
