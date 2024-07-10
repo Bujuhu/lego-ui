@@ -1,3 +1,6 @@
+This was a university project.
+
+
 # lego-ui
 
 lego-ui is a graphical user interface written in go developed on top of the [go-acme/lego](https://github.com/go-acme/lego) library to make it simple for everyone to get 
